@@ -26,37 +26,34 @@
 
 ```mermaid
 graph TD
-    Dev[开发人员 / 运维] -->|浏览器| FrontDev[前端 (Vite dev)]
-    FrontDev -->|/api (代理)| ViteProxy[Vite Dev Server]
-    ViteProxy --> BackendDev[后端 (Spring Boot)]
-
-    subgraph CI/CD
-        CI[CI (GitHub Actions)] --> Build[Build: npm build & mvn package]
-        Build --> Image[Docker Image]
+ graph TD
+    User[User / Operator] --> WebUI[Vue 3 Web UI]
+    subgraph "Single JAR Application"
+        WebUI --REST API--> Controller[Web Controller]
+        subgraph "Service Layer"
+            ClusterSvc[Cluster Management Service]
+            MonitorSvc[Details Service]
+            SearchSvc[Message Search Service]
+        end
+        Controller --> ClusterSvc
+        Controller --> MonitorSvc
+        Controller --> SearchSvc
+        subgraph "Data Access"
+            MyBatis[MyBatis Mapper]
+            SQLite[(SQLite DB)]
+            MyBatis --JDBC--> SQLite
+        end
+        ClusterSvc --> MyBatis
     end
-
-    subgraph Runtime
-        Image --> Container[容器 / 单 JAR 应用]
-        Container -->|serves static| Browser[浏览器用户]
-        Container --> BackendApp[Spring Boot App]
-        BackendApp --> Services[Service Layer]
-        Services --> MyBatis[MyBatis Mapper]
-        MyBatis --> SQLiteDB[(SQLite DB)]
+    subgraph "Kafka Ecosystem"
+        AdminClient[Kafka AdminClient]
+        Consumer[Kafka Consumer]
     end
-
-    subgraph KafkaEnv [Kafka Ecosystem]
-        AdminClient[AdminClient] --> KafkaCluster[目标 Kafka 集群]
-        Consumer[Consumer Clients] --> KafkaCluster
-        JMXConn[JMX] --> KafkaCluster
-    end
-
-    BackendApp --> AdminClient
-    BackendApp --> Consumer
-    BackendApp --> JMXConn
-
-    style CI fill:#f3f4f6,stroke:#bbb
-    style Runtime fill:#fff,stroke:#bbb
-    style KafkaEnv fill:#fff8e1,stroke:#bbb
+    ClusterSvc --Manage--> AdminClient
+    SearchSvc --Scan--> Consumer
+    MonitorSvc --Lag--> AdminClient
+    AdminClient --> KafkaCluster[Target Kafka Cluster]
+    Consumer --> KafkaCluster
 ```
 
 说明：
