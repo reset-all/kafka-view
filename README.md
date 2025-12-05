@@ -25,7 +25,6 @@
 ## 3. 系统架构 (System Architecture)
 
 ```mermaid
-graph TD
  graph TD
     User[User / Operator] --> WebUI[Vue 3 Web UI]
     subgraph "Single JAR Application"
