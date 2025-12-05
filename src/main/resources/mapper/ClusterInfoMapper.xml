@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kafkaview.mapper.ClusterInfoMapper">
+
+    <resultMap id="BaseResultMap" type="com.kafkaview.entity.ClusterInfo">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="bootstrap_servers" property="bootstrapServers" />
+        <result column="kafka_version" property="kafkaVersion" />
+        <result column="security_protocol" property="securityProtocol" />
+        <result column="sasl_mechanism" property="saslMechanism" />
+        <result column="sasl_jaas_config" property="saslJaasConfig" />
+        <result column="username" property="username" />
+        <result column="password" property="password" />
+        <result column="timeout" property="timeout" />
+        <result column="version_supported" property="versionSupported" />
+        <result column="created_at" property="createdAt" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, bootstrap_servers, kafka_version, security_protocol, sasl_mechanism, 
+        sasl_jaas_config, username, password, timeout, version_supported, created_at
+    </sql>
+
+    <insert id="insert" parameterType="com.kafkaview.entity.ClusterInfo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO cluster_info (
+            name, bootstrap_servers, kafka_version, security_protocol, sasl_mechanism,
+            sasl_jaas_config, username, password, timeout, version_supported
+        ) VALUES (
+            #{name}, #{bootstrapServers}, #{kafkaVersion}, #{securityProtocol}, #{saslMechanism},
+            #{saslJaasConfig}, #{username}, #{password}, #{timeout}, #{versionSupported}
+        )
+    </insert>
+
+    <update id="update" parameterType="com.kafkaview.entity.ClusterInfo">
+        UPDATE cluster_info
+        SET name = #{name},
+            bootstrap_servers = #{bootstrapServers},
+            kafka_version = #{kafkaVersion},
+            security_protocol = #{securityProtocol},
+            sasl_mechanism = #{saslMechanism},
+            sasl_jaas_config = #{saslJaasConfig},
+            username = #{username},
+            password = #{password},
+            timeout = #{timeout},
+            version_supported = #{versionSupported}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById">
+        DELETE FROM cluster_info WHERE id = #{id}
+    </delete>
+
+    <select id="selectById" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM cluster_info
+        WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM cluster_info
+        ORDER BY created_at DESC
+    </select>
+
+    <select id="selectByName" resultMap="BaseResultMap">
+        SELECT <include refid="Base_Column_List" />
+        FROM cluster_info
+        WHERE name = #{name}
+    </select>
+
+</mapper>

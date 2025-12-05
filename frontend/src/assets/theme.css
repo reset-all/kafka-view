@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+/* =========================================
+   THEME: MINIMAL (Clean & Simple)
+   ========================================= */
+body.theme-minimal {
+  /* Core Colors */
+  --app-bg: #f5f7fa;
+  --app-bg-panel: #ffffff;
+  --app-text-main: #2c3e50;
+  --app-text-muted: #606266;
+  --app-primary: #409eff; /* Standard Blue */
+  --app-border: #dcdfe6;
+  --app-font-main: 'Inter', 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+  --app-font-header: 'Inter', sans-serif;
+  --app-radius: 4px;
+
+  /* Background Image */
+  --app-bg-image: none;
+
+  /* Element Plus Overrides - Reset to defaults mostly */
+  --el-color-primary: var(--app-primary);
+  --el-color-success: #67c23a;
+  --el-color-warning: #e6a23c;
+  --el-color-danger: #f56c6c;
+  --el-color-info: #909399;
+  
+  --el-bg-color: var(--app-bg);
+  --el-bg-color-overlay: var(--app-bg-panel);
+  --el-text-color-primary: var(--app-text-main);
+  --el-text-color-regular: var(--app-text-muted);
+  --el-border-color: var(--app-border);
+  --el-border-color-light: #e4e7ed;
+  --el-fill-color-blank: var(--app-bg-panel);
+  --el-font-family: var(--app-font-main);
+}
+
+
+/* =========================================
+   GLOBAL APPLICATION STYLES
+   ========================================= */
+
+body {
+  background-color: var(--app-bg);
+  color: var(--app-text-main);
+  font-family: var(--app-font-main);
+  background-image: var(--app-bg-image);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  transition: background 0.5s ease, color 0.5s ease;
+  margin: 0;
+}
+
+/* Utility Classes */
+.souls-font-serif {
+  font-family: var(--app-font-main) !important;
+}
+.souls-font-header {
+  font-family: var(--app-font-header) !important;
+}
+.souls-text-gold { color: var(--el-color-primary); }
+.souls-text-blood { color: var(--el-color-danger); }
+
+
+/* =========================================
+   MINIMAL THEME SPECIFIC ADJUSTMENTS
+   ========================================= */
+body.theme-minimal .el-dialog {
+  border-radius: 4px;
+}
+body.theme-minimal .el-card {
+  border-radius: 4px;
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+}
