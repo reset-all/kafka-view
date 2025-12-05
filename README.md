@@ -83,13 +83,13 @@ graph TD
 
     ```mermaid
     graph TD
-        User[用户 / 运维人员] --> WebUI[Vue 3 Web UI]
+        User[User / Operator] --> WebUI[Vue 3 Web UI]
         subgraph "Single JAR Application"
             WebUI --REST API--> Controller[Web Controller]
             subgraph "Service Layer"
-                ClusterSvc[集群管理服务]
-                MonitorSvc[详情信息服务]
-                SearchSvc[消息检索服务]
+                ClusterSvc[Cluster Management Service]
+                MonitorSvc[Details Service]
+                SearchSvc[Message Search Service]
             end
             Controller --> ClusterSvc
             Controller --> MonitorSvc
@@ -104,12 +104,11 @@ graph TD
         subgraph "Kafka Ecosystem"
             AdminClient[Kafka AdminClient]
             Consumer[Kafka Consumer]
-            JMXConn[JMX Connector]
         end
         ClusterSvc --Manage--> AdminClient
         SearchSvc --Scan--> Consumer
         MonitorSvc --Lag--> AdminClient
-        AdminClient --> KafkaCluster[目标 Kafka 集群]
+        AdminClient --> KafkaCluster[Target Kafka Cluster]
         Consumer --> KafkaCluster
     ```
 
